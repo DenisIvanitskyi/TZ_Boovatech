@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestLoaderApp", "src\TestLo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "src\Common\Common.csproj", "{6FD6A08A-4E1D-4E1D-B1C7-442530267030}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerApp", "src\TimerApp\TimerApp.csproj", "{827BAA49-3777-44EE-91F1-C60599FD7D8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{6FD6A08A-4E1D-4E1D-B1C7-442530267030}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FD6A08A-4E1D-4E1D-B1C7-442530267030}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FD6A08A-4E1D-4E1D-B1C7-442530267030}.Release|Any CPU.Build.0 = Release|Any CPU
+		{827BAA49-3777-44EE-91F1-C60599FD7D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{827BAA49-3777-44EE-91F1-C60599FD7D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{827BAA49-3777-44EE-91F1-C60599FD7D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{827BAA49-3777-44EE-91F1-C60599FD7D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
