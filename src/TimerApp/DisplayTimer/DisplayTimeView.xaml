@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="TimerApp.DisplayTimer.DisplayTimeView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:displaytimer="clr-namespace:TimerApp.DisplayTimer" xmlns:converters="clr-namespace:TimerApp.Converters"
+             d:DataContext="{d:DesignInstance Type=displaytimer:IDisplaySencondsViewModel, IsDesignTimeCreatable=False}">
+    <UserControl.Resources>
+        <converters:FromSecondToDisplayFormatConverter x:Key="FromSecondToDisplayFormatConverter" />
+    </UserControl.Resources>
+    <TextBox Text="{Binding DisplayTime, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, Converter={StaticResource FromSecondToDisplayFormatConverter}}"
+             Height="35"
+             FontSize="16"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             VerticalContentAlignment="Center"
+             IsReadOnly="True"/>
+</UserControl>

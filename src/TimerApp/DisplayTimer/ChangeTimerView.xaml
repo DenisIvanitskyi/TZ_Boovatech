@@ -1,0 +1,50 @@
+﻿<UserControl x:Class="TimerApp.DisplayTimer.ChangeTimerView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:displaytimer="clr-namespace:TimerApp.DisplayTimer" 
+             xmlns:converters="clr-namespace:TimerApp.Converters" xmlns:rules="clr-namespace:TimerApp.Base.Rules"
+             d:DataContext="{d:DesignInstance Type=displaytimer:IDisplaySencondsViewModel, IsDesignTimeCreatable=False}">
+    <UserControl.Resources>
+        <converters:FromSecondToDisplayFormatWithStateConverter x:Key="FromSecondToDisplayFormatWithStateConverter" />
+        <ControlTemplate x:Key="validationTemplate">
+            <DockPanel>
+                <TextBlock Foreground="Red" FontSize="20" Margin="-10,0,0,0">!</TextBlock>
+                <AdornedElementPlaceholder />
+            </DockPanel>
+        </ControlTemplate>
+        <Style x:Key="textBoxInError" TargetType="{x:Type TextBox}">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="true">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                            Path=(Validation.Errors)/ErrorContent}"/>
+                    <Setter Property="Foreground" Value="Red" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <TextBox GotFocus="TextBox_GotFocus"
+             LostFocus="TextBox_LostFocus"
+             Validation.ErrorTemplate="{StaticResource validationTemplate}"
+             Style="{StaticResource textBoxInError}"
+             Height="35"
+             FontSize="16"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             VerticalContentAlignment="Center">
+        <TextBox.Text>
+            <Binding Path="TimerPresenterModel"
+                     UpdateSourceTrigger="PropertyChanged"
+                     Mode="TwoWay"
+                     Converter="{StaticResource FromSecondToDisplayFormatWithStateConverter}">
+                <Binding.ValidationRules>
+                    <rules:IntNumberValidation />
+                    <rules:RangeNumberValidation />
+                </Binding.ValidationRules>
+            </Binding>
+        </TextBox.Text>
+    </TextBox>
+</UserControl>

@@ -48,6 +48,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Mvvm\BaseViewModel.cs" />
+    <Compile Include="Mvvm\Command.cs" />
+    <Compile Include="Mvvm\IBaseViewModel.cs" />
     <Compile Include="Mvvm\PropertyChangedBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

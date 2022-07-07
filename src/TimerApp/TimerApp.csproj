@@ -59,9 +59,32 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ShellView.xaml.cs">
+    <Compile Include="Base\Rules\RangeNumberValidation.cs" />
+    <Compile Include="Base\Rules\IntNumberValidation.cs" />
+    <Compile Include="Base\TimerStrategyChanging\EvenTimerStrategy.cs" />
+    <Compile Include="Base\TimerStrategyChanging\NoEvenTimerStrategy.cs" />
+    <Compile Include="Base\Visual\IFocusGot.cs" />
+    <Compile Include="Base\Visual\IFocusLost.cs" />
+    <Compile Include="Converters\FromSecondToDisplayFormatConverter.cs" />
+    <Compile Include="Converters\FromSecondToDisplayFormatWithStateConverter.cs" />
+    <Compile Include="DisplayTimer\ChangeTimerView.xaml.cs">
+      <DependentUpon>ChangeTimerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayTimer\ChangeTimerViewModel.cs" />
+    <Compile Include="DisplayTimer\DisplayTimeView.xaml.cs">
+      <DependentUpon>DisplayTimeView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DisplayTimer\DisplayTimerViewModel.cs" />
+    <Compile Include="DisplayTimer\IDisplaySencondsViewModel.cs" />
+    <Compile Include="DisplayTimer\ITimerStrategyChanging.cs" />
+    <Compile Include="Enums\TimeFormatState.cs" />
+    <Compile Include="Models\TimerPresenterModel.cs" />
+    <Compile Include="Services\Timer\ITimerService.cs" />
+    <Compile Include="Services\Timer\TimerService.cs" />
+    <Compile Include="Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Shell\ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -90,10 +113,25 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="ShellView.xaml">
+    <Page Include="DisplayTimer\ChangeTimerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DisplayTimer\DisplayTimeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Shell\ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.csproj">
+      <Project>{6FD6A08A-4E1D-4E1D-B1C7-442530267030}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
