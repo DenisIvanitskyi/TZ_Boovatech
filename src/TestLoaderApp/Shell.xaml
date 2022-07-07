@@ -6,6 +6,6 @@
         WindowStartupLocation="CenterScreen"
         Width="534"
         Height="170"
-        >
+        ResizeMode="NoResize">
     <loader:LoaderView />
 </Window>
