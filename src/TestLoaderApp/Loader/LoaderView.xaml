@@ -17,9 +17,6 @@
             <Setter Property="FontWeight" Value="Bold" />
         </Style>
     </UserControl.Resources>
-    <UserControl.DataContext>
-        <loader:LoaderViewModel />
-    </UserControl.DataContext>
     <Border Padding="10">
         <Grid>
             <Grid.RowDefinitions>
