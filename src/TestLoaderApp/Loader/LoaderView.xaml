@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="TestLoaderApp.Loader.LoaderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+             xmlns:loader="clr-namespace:TestLoaderApp.Loader">
+    <UserControl.Resources>
+        <Style x:Key="HeaderTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="50" />
+            <Setter Property="Foreground" Value="#FF000000" />
+            <Setter Property="Opacity" Value="0.13" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+        <Style x:Key="SimpleTextBlockStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="Foreground" Value="#FF000000" />
+            <Setter Property="FontWeight" Value="Bold" />
+        </Style>
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <loader:LoaderViewModel />
+    </UserControl.DataContext>
+    <Border Padding="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid HorizontalAlignment="Center">
+                <TextBlock Text="{Binding ElementName=Lodaer_Slider, Path=Value, StringFormat=\{0:0.00\}\%}" 
+                       Style="{StaticResource HeaderTextBlockStyle}"/>
+                <TextBlock Text="{Binding ElementName=Lodaer_Slider, Path=Value, StringFormat=\{0:0.00\}\%}" 
+                       Style="{StaticResource SimpleTextBlockStyle}"
+                       VerticalAlignment="Bottom" />
+            </Grid>
+            <ProgressBar Grid.Row="2"
+                         Value="{Binding ElementName=Lodaer_Slider, Path=Value}"
+                         Minimum="{Binding ElementName=Lodaer_Slider, Path=Minimum}"
+                         Maximum="{Binding ElementName=Lodaer_Slider, Path=Maximum}"
+                         Height="15"
+                         HorizontalAlignment="Stretch"/>
+            <Slider Grid.Row="4"
+                    Minimum="0"
+                    Maximum="100"
+                    x:Name="Lodaer_Slider"/>
+        </Grid>
+    </Border>
+</UserControl>

@@ -1,0 +1,11 @@
+﻿<Window x:Class="TestLoaderApp.Shell"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        xmlns:loader="clr-namespace:TestLoaderApp.Loader"
+        Title="Test Loader App"
+        WindowStartupLocation="CenterScreen"
+        Width="534"
+        Height="170"
+        >
+    <loader:LoaderView />
+</Window>
