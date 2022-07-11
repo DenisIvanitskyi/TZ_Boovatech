@@ -5,7 +5,7 @@
              mc:Ignorable="d"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:displaytimer="clr-namespace:TimerApp.DisplayTimer" 
-             xmlns:converters="clr-namespace:TimerApp.Converters" xmlns:rules="clr-namespace:TimerApp.Base.Rules"
+             xmlns:converters="clr-namespace:TimerApp.Converters" xmlns:rules="clr-namespace:TimerApp.Base.Rules" xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
              d:DataContext="{d:DesignInstance Type=displaytimer:IDisplaySencondsViewModel, IsDesignTimeCreatable=False}">
     <UserControl.Resources>
         <converters:FromSecondToDisplayFormatWithStateConverter x:Key="FromSecondToDisplayFormatWithStateConverter" />
@@ -26,15 +26,14 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <TextBox GotFocus="TextBox_GotFocus"
-             LostFocus="TextBox_LostFocus"
-             Validation.ErrorTemplate="{StaticResource validationTemplate}"
-             Style="{StaticResource textBoxInError}"
-             Height="35"
-             FontSize="16"
-             HorizontalAlignment="Stretch"
-             VerticalAlignment="Stretch"
-             VerticalContentAlignment="Center">
+    <controls:TextBoxExtended Validation.ErrorTemplate="{StaticResource validationTemplate}"
+                              Style="{StaticResource textBoxInError}"
+                              Height="35"
+                              FontSize="16"
+                              HorizontalAlignment="Stretch"
+                              VerticalAlignment="Stretch"
+                              VerticalContentAlignment="Center"
+                              IsSelected="{Binding IsInputHasFocus, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
         <TextBox.Text>
             <Binding Path="TimerPresenterModel"
                      UpdateSourceTrigger="PropertyChanged"
@@ -46,5 +45,5 @@
                 </Binding.ValidationRules>
             </Binding>
         </TextBox.Text>
-    </TextBox>
+    </controls:TextBoxExtended>
 </UserControl>

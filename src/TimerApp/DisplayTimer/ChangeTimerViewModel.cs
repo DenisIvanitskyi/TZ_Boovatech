@@ -1,16 +1,16 @@
 ﻿using Common.Mvvm;
 using System;
-using TimerApp.Base.Visual;
 using TimerApp.Enums;
 using TimerApp.Models;
 using TimerApp.Services.Timer;
 
 namespace TimerApp.DisplayTimer
 {
-    public class ChangeTimerViewModel : BaseViewModel<ChangeTimerView>, IDisplaySencondsViewModel, IFocusLost, IFocusGot
+    public class ChangeTimerViewModel : BaseViewModel<ChangeTimerView>, IDisplaySencondsViewModel
     {
         private readonly ITimerService _timerService;
         private TimerPresenterModel _timerPresenterModel;
+        private bool _isInputHasFocus;
 
         public ChangeTimerViewModel(ITimerService timerService)
         {
@@ -25,6 +25,21 @@ namespace TimerApp.DisplayTimer
             {
                 TimerPresenterModel.DisplayTime = value;
                 OnPropertyChanged(nameof(DisplayTime));
+            }
+        }
+
+        public bool IsInputHasFocus
+        {
+            get => _isInputHasFocus;
+            set
+            {
+                _isInputHasFocus = value;
+                OnPropertyChanged(nameof(IsInputHasFocus));
+
+                if (IsInputHasFocus)
+                    OnFocusGot();
+                else
+                    OnFocusLost();
             }
         }
 
@@ -70,13 +85,13 @@ namespace TimerApp.DisplayTimer
             }
         }
 
-        public void OnFocusGot(object sender)
+        public void OnFocusGot()
         {
             _timerService?.Stop();
             TimerPresenterModel.TimeFormatState = TimeFormatState.Second;
         }
 
-        public void OnFocusLost(object sender)
+        public void OnFocusLost()
         {
             var timeSpan = TimeSpan.FromSeconds(DisplayTime);
 

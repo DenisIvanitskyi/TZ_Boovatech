@@ -63,8 +63,6 @@
     <Compile Include="Base\Rules\IntNumberValidation.cs" />
     <Compile Include="Base\TimerStrategyChanging\EvenTimerStrategy.cs" />
     <Compile Include="Base\TimerStrategyChanging\NoEvenTimerStrategy.cs" />
-    <Compile Include="Base\Visual\IFocusGot.cs" />
-    <Compile Include="Base\Visual\IFocusLost.cs" />
     <Compile Include="Converters\FromSecondToDisplayFormatConverter.cs" />
     <Compile Include="Converters\FromSecondToDisplayFormatWithStateConverter.cs" />
     <Compile Include="DisplayTimer\ChangeTimerView.xaml.cs">
