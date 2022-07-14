@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:displaytimer="clr-namespace:TimerApp.DisplayTimer" 
-             xmlns:converters="clr-namespace:TimerApp.Converters" xmlns:rules="clr-namespace:TimerApp.Base.Rules" xmlns:controls="clr-namespace:Common.Controls;assembly=Common"
-             d:DataContext="{d:DesignInstance Type=displaytimer:IDisplaySencondsViewModel, IsDesignTimeCreatable=False}">
+             xmlns:converters="clr-namespace:TimerApp.Infrastructures.Converters" 
+             xmlns:rules="clr-namespace:TimerApp.Infrastructures.Base.Rules" 
+             xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
+             xmlns:behaviors="clr-namespace:TimerApp.Infrastructures.Behaviors">
     <UserControl.Resources>
         <converters:FromSecondToDisplayFormatWithStateConverter x:Key="FromSecondToDisplayFormatWithStateConverter" />
         <ControlTemplate x:Key="validationTemplate">
@@ -26,14 +27,23 @@
             </Style.Triggers>
         </Style>
     </UserControl.Resources>
-    <controls:TextBoxExtended Validation.ErrorTemplate="{StaticResource validationTemplate}"
-                              Style="{StaticResource textBoxInError}"
-                              Height="35"
-                              FontSize="16"
-                              HorizontalAlignment="Stretch"
-                              VerticalAlignment="Stretch"
-                              VerticalContentAlignment="Center"
-                              IsSelected="{Binding IsInputHasFocus, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}">
+
+    <b:Interaction.Triggers>
+        <b:EventTrigger EventName="Unloaded">
+            <b:InvokeCommandAction Command="{Binding OnDeactivateViewModelCommand}" />
+        </b:EventTrigger>
+    </b:Interaction.Triggers>
+
+    <TextBox Validation.ErrorTemplate="{StaticResource validationTemplate}"
+             Style="{StaticResource textBoxInError}"
+             Height="35"
+             FontSize="16"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
+             VerticalContentAlignment="Center">
+        <b:Interaction.Behaviors>
+            <behaviors:TextBoxSelectionBehavior IsSelected="{Binding IsInputHasFocus, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}" />
+        </b:Interaction.Behaviors>
         <TextBox.Text>
             <Binding Path="TimerPresenterModel"
                      UpdateSourceTrigger="PropertyChanged"
@@ -45,5 +55,5 @@
                 </Binding.ValidationRules>
             </Binding>
         </TextBox.Text>
-    </controls:TextBoxExtended>
+    </TextBox>
 </UserControl>

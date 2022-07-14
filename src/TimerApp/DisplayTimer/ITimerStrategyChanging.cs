@@ -1,6 +1,7 @@
-﻿using TimerApp.Services.Timer;
+﻿
+using TimerApp.Infrastructures.Services.Timer;
 
-namespace TimerApp.DisplayTimer
+namespace TimerApp.Infrastructures.DisplayTimer
 {
     public interface ITimerStrategyChanging
     {

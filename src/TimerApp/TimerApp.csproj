@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
@@ -59,12 +62,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Base\Rules\RangeNumberValidation.cs" />
-    <Compile Include="Base\Rules\IntNumberValidation.cs" />
-    <Compile Include="Base\TimerStrategyChanging\EvenTimerStrategy.cs" />
-    <Compile Include="Base\TimerStrategyChanging\NoEvenTimerStrategy.cs" />
-    <Compile Include="Converters\FromSecondToDisplayFormatConverter.cs" />
-    <Compile Include="Converters\FromSecondToDisplayFormatWithStateConverter.cs" />
+    <Compile Include="Infrastructures\Base\Rules\RangeNumberValidation.cs" />
+    <Compile Include="Infrastructures\Base\Rules\IntNumberValidation.cs" />
+    <Compile Include="Infrastructures\Base\TimerStrategyChanging\EvenTimerStrategy.cs" />
+    <Compile Include="Infrastructures\Base\TimerStrategyChanging\NoEvenTimerStrategy.cs" />
+    <Compile Include="Infrastructures\Behaviors\TextBoxSelectionBehavior.cs" />
+    <Compile Include="Infrastructures\Converters\FromSecondToDisplayFormatConverter.cs" />
+    <Compile Include="Infrastructures\Converters\FromSecondToDisplayFormatWithStateConverter.cs" />
     <Compile Include="DisplayTimer\ChangeTimerView.xaml.cs">
       <DependentUpon>ChangeTimerView.xaml</DependentUpon>
     </Compile>
@@ -75,14 +79,13 @@
     <Compile Include="DisplayTimer\DisplayTimerViewModel.cs" />
     <Compile Include="DisplayTimer\IDisplaySencondsViewModel.cs" />
     <Compile Include="DisplayTimer\ITimerStrategyChanging.cs" />
-    <Compile Include="Enums\TimeFormatState.cs" />
-    <Compile Include="Models\TimerPresenterModel.cs" />
-    <Compile Include="Services\Timer\ITimerService.cs" />
-    <Compile Include="Services\Timer\TimerService.cs" />
+    <Compile Include="Infrastructures\Enums\TimeFormatState.cs" />
+    <Compile Include="Infrastructures\Models\TimerPresenterModel.cs" />
+    <Compile Include="Infrastructures\Services\Timer\ITimerService.cs" />
+    <Compile Include="Infrastructures\Services\Timer\TimerService.cs" />
     <Compile Include="Shell\ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Shell\ShellViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -102,6 +105,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

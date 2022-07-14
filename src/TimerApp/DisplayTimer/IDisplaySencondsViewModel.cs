@@ -2,7 +2,7 @@
 
 namespace TimerApp.DisplayTimer
 {
-    public interface IDisplaySencondsViewModel : IBaseViewModel
+    public interface IDisplaySencondsViewModel
     {
         double DisplayTime { get; }
     }

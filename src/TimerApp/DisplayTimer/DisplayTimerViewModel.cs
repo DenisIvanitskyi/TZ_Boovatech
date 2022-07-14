@@ -1,19 +1,23 @@
 ﻿using Common.Mvvm;
-using TimerApp.Services.Timer;
+using Microsoft.Xaml.Behaviors.Core;
+using System;
+using System.Windows.Input;
+using TimerApp.Infrastructures.DisplayTimer;
+using TimerApp.Infrastructures.Services.Timer;
 
 namespace TimerApp.DisplayTimer
 {
-    public class DisplayTimeViewModel : BaseViewModel<DisplayTimeView>, IDisplaySencondsViewModel
+    public class DisplayTimeViewModel : PropertyChangedBase
     {
         private ITimerService _timerService;
         private ITimerStrategyChanging _timerStrategyChanging;
         private double _displayTimer;
+        private bool _isTimerInited;
 
-        public DisplayTimeViewModel(ITimerService timerService, ITimerStrategyChanging timerStrategyChanging)
+        public DisplayTimeViewModel()
         {
-            _timerService = timerService;
-            _timerStrategyChanging = timerStrategyChanging;
-        }
+            OnDeactivateViewModelCommand = new ActionCommand(OnDeactivateViewModelHandle);
+        }        
 
         public double DisplayTime
         {
@@ -25,39 +29,64 @@ namespace TimerApp.DisplayTimer
             }
         }
 
-        public override void ActivateViewModel()
+        public ITimerService TimerService
         {
-            base.ActivateViewModel();
-            if (_timerService != null)
+            get => _timerService;
+            set
             {
-                _timerService.OnEverySecondChanged += TimerService_OnEverySecondChanged;
+                _timerService = value;
+                OnPropertyChanged(nameof(TimerService));
+                if (!_isTimerInited)
+                    InitializeTimerService(value);
             }
         }
 
-
-
-        public override void DeactivateViewModel()
+        public ITimerStrategyChanging TimerStrategyChanging
         {
-            base.DeactivateViewModel();
+            get => _timerStrategyChanging;
+            set
+            {
+                _timerStrategyChanging = value;
+                OnPropertyChanged(nameof(TimerStrategyChanging));
+            }
+        }
+
+        public ICommand OnDeactivateViewModelCommand { get; }
+
+        private void InitializeTimerService(ITimerService value)
+        {
+            if (value != null)
+            {
+                _isTimerInited = true;
+                value.OnEverySecondChanged += TimerService_OnEverySecondChanged;
+                value.OnTimerStop += OnTimerStop;
+            }
+        }
+
+        private void OnDeactivateViewModelHandle()
+        {
             if (_timerService != null)
             {
                 _timerService.OnEverySecondChanged -= TimerService_OnEverySecondChanged;
+                _timerService.OnTimerStop -= OnTimerStop;
                 _timerService.Stop();
                 _timerService.Dispose();
             }
         }
 
-        protected override DisplayTimeView CreateView()
-            => new DisplayTimeView() { DataContext = this };
-
         private void TimerService_OnEverySecondChanged(object sender, double e)
         {
             if (sender is ITimerService timerService)
             {
-                var isShouldUpdateTime = _timerStrategyChanging?.IsShouldToUpdateTime(timerService) == true;
+                var isShouldUpdateTime = TimerStrategyChanging?.IsShouldToUpdateTime(timerService) == true;
                 if (isShouldUpdateTime)
                     DisplayTime = timerService.SecondToFinish;
             }
+        }
+
+        private void OnTimerStop(object sender, EventArgs e)
+        {
+            DisplayTime = 0;
         }
     }
 }

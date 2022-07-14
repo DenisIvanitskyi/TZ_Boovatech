@@ -48,12 +48,7 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controls\TextBoxExtended.xaml.cs">
-      <DependentUpon>TextBoxExtended.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Mvvm\BaseViewModel.cs" />
     <Compile Include="Mvvm\Command.cs" />
-    <Compile Include="Mvvm\IBaseViewModel.cs" />
     <Compile Include="Mvvm\PropertyChangedBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -76,12 +71,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Page Include="Controls\TextBoxExtended.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -4,25 +4,46 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-        xmlns:shell="clr-namespace:TimerApp.Shell"
-        d:DataContext="{d:DesignInstance Type=shell:ShellViewModel, IsDesignTimeCreatable=False}"
+        xmlns:displaytimer="clr-namespace:TimerApp.DisplayTimer" 
+        xmlns:timer="clr-namespace:TimerApp.Infrastructures.Services.Timer" 
+        xmlns:timerstrategychanging="clr-namespace:TimerApp.Infrastructures.Base.TimerStrategyChanging"
         SizeToContent="Height"
         Title="Timer App"
         Width="500"
         WindowStartupLocation="CenterScreen"
         ResizeMode="NoResize">
+    <Window.Resources>
+        <timer:TimerService x:Key="TimerService" />
+        <timerstrategychanging:EvenTimerStrategy x:Key="EvenTimerStrategy" />
+        <timerstrategychanging:NoEvenTimerStrategy x:Key="NoEvenTimerStrategy" />
+    </Window.Resources>
+
     <Border Padding="20">
-        <ItemsControl ItemsSource="{Binding Items}">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel HorizontalAlignment="Stretch"
-                                VerticalAlignment="Stretch">
-                        <ContentControl Focusable="False"
-                                    Content="{Binding View}" />
-                        <Border Height="10" />
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <displaytimer:ChangeTimerView Grid.Row="0">
+                <displaytimer:ChangeTimerView.DataContext>
+                    <displaytimer:ChangeTimerViewModel TimerService="{StaticResource TimerService}" />
+                </displaytimer:ChangeTimerView.DataContext>
+            </displaytimer:ChangeTimerView>
+            <displaytimer:DisplayTimeView Grid.Row="2">
+                <displaytimer:DisplayTimeView.DataContext>
+                    <displaytimer:DisplayTimeViewModel TimerService="{StaticResource TimerService}"
+                                                       TimerStrategyChanging="{StaticResource EvenTimerStrategy}"/>
+                </displaytimer:DisplayTimeView.DataContext>
+            </displaytimer:DisplayTimeView>
+            <displaytimer:DisplayTimeView Grid.Row="4">
+                <displaytimer:DisplayTimeView.DataContext>
+                    <displaytimer:DisplayTimeViewModel TimerService="{StaticResource TimerService}"
+                                                       TimerStrategyChanging="{StaticResource NoEvenTimerStrategy}"/>
+                </displaytimer:DisplayTimeView.DataContext>
+            </displaytimer:DisplayTimeView>
+        </Grid>
     </Border>
 </Window>

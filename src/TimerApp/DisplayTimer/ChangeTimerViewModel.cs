@@ -1,21 +1,25 @@
 ﻿using Common.Mvvm;
+using Microsoft.Xaml.Behaviors.Core;
 using System;
-using TimerApp.Enums;
-using TimerApp.Models;
-using TimerApp.Services.Timer;
+using System.Windows.Input;
+using TimerApp.Infrastructures.Enums;
+using TimerApp.Infrastructures.Models;
+using TimerApp.Infrastructures.Services.Timer;
 
 namespace TimerApp.DisplayTimer
 {
-    public class ChangeTimerViewModel : BaseViewModel<ChangeTimerView>, IDisplaySencondsViewModel
+    public class ChangeTimerViewModel : PropertyChangedBase
     {
-        private readonly ITimerService _timerService;
+        private ITimerService _timerService;
         private TimerPresenterModel _timerPresenterModel;
         private bool _isInputHasFocus;
+        private bool _isTimerInited;
 
-        public ChangeTimerViewModel(ITimerService timerService)
+        public ChangeTimerViewModel()
         {
-            _timerService = timerService;
             TimerPresenterModel = new TimerPresenterModel() { TimeFormatState = TimeFormatState.FullTime };
+
+            OnDeactivateViewModelCommand = new ActionCommand(OnDeactivateViewModelHandle);
         }
 
         public double DisplayTime
@@ -35,11 +39,7 @@ namespace TimerApp.DisplayTimer
             {
                 _isInputHasFocus = value;
                 OnPropertyChanged(nameof(IsInputHasFocus));
-
-                if (IsInputHasFocus)
-                    OnFocusGot();
-                else
-                    OnFocusLost();
+                OnInputFocusChanged();
             }
         }
 
@@ -53,36 +53,52 @@ namespace TimerApp.DisplayTimer
             }
         }
 
-        public override void ActivateViewModel()
+        public ITimerService TimerService
         {
-            base.ActivateViewModel();
-            if(_timerService != null)
+            get => _timerService;
+            set
             {
-                _timerService.OnEverySecondChanged += TimerService_OnEverySecondChanged;
+                _timerService = value;
+                OnPropertyChanged(nameof(TimerService));
+                if (!_isTimerInited)
+                    OnTimerServiceInit(value);
             }
         }
 
-        
+        public ICommand OnDeactivateViewModelCommand { get; }
 
-        public override void DeactivateViewModel()
+        private void OnTimerServiceInit(ITimerService timerService)
         {
-            base.DeactivateViewModel();
+            if (timerService != null)
+            {
+                _isTimerInited = true;
+                timerService.OnEverySecondChanged += TimerService_OnEverySecondChanged;
+            }
+        }
+
+        private void OnDeactivateViewModelHandle()
+        {
             if (_timerService != null)
             {
                 _timerService.OnEverySecondChanged -= TimerService_OnEverySecondChanged;
             }
         }
 
-        protected override ChangeTimerView CreateView()
-            => new ChangeTimerView() { DataContext = this };
-
         private void TimerService_OnEverySecondChanged(object sender, double e)
         {
-            if(sender is ITimerService timerService)
+            if (sender is ITimerService timerService)
             {
                 DisplayTime = timerService.SecondToFinish;
                 OnPropertyChanged(nameof(TimerPresenterModel));
             }
+        }
+
+        private void OnInputFocusChanged()
+        {
+            if (IsInputHasFocus)
+                OnFocusGot();
+            else
+                OnFocusLost();
         }
 
         public void OnFocusGot()
@@ -99,7 +115,8 @@ namespace TimerApp.DisplayTimer
             TimerPresenterModel.DisplayTime = timeSpan.TotalSeconds;
             OnPropertyChanged(nameof(TimerPresenterModel));
 
-            _timerService.Start(timeSpan);
+            if (DisplayTime > 0)
+                _timerService?.Start(timeSpan);
         }
     }
 }
